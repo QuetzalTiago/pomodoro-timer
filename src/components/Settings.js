@@ -1,12 +1,25 @@
 import React, { useState, useEffect } from "react";
 
-const Settings = ({ interval, changeInterval }) => {
-  const [focusValue, setFocusValue] = useState(interval / 60);
-  const [restValue, setRestValue] = useState();
+const Settings = ({
+  focusinterval,
+  restinterval,
+  changeFocusInterval,
+  changeRestInterval,
+}) => {
+  const [focusValue, setFocusValue] = useState(focusinterval / 60);
+  const [restValue, setRestValue] = useState(restinterval / 60);
 
   useEffect(() => {
-    changeInterval(focusValue);
-  }, [focusValue]);
+    if (focusValue >= 1) {
+      changeFocusInterval(focusValue);
+    }
+  }, [focusValue, changeFocusInterval]);
+
+  useEffect(() => {
+    if (restValue >= 1) {
+      changeRestInterval(restValue);
+    }
+  }, [restValue, changeRestInterval]);
 
   return (
     <div className="container">
@@ -16,7 +29,7 @@ const Settings = ({ interval, changeInterval }) => {
           <div className="input-group">
             <input
               onChange={(e) => {
-                setFocusValue(e.target.value);
+                setFocusValue(parseInt(e.target.value));
               }}
               type="number"
               className="form-control"

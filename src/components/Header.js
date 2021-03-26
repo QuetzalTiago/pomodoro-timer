@@ -4,15 +4,16 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Settings from "./Settings";
 
-const Header = ({ changeInterval, interval }) => {
+const Header = ({
+  changeFocusInterval,
+  changeRestInterval,
+  focusinterval,
+  restinterval,
+}) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const handleSave = () => {
-    handleClose();
-  };
 
   return (
     <Fragment>
@@ -41,7 +42,12 @@ const Header = ({ changeInterval, interval }) => {
         <Modal.Body>
           <div className="container">
             <div className="row">
-              <Settings changeInterval={changeInterval} interval={interval} />
+              <Settings
+                changeFocusInterval={changeFocusInterval}
+                changeRestInterval={changeRestInterval}
+                focusinterval={focusinterval}
+                restinterval={restinterval}
+              />
             </div>
           </div>
         </Modal.Body>
