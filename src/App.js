@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Counter from "./components/Counter";
 import Settings from "./components/Settings";
 import Quote from "./components/Quote";
+import Header from "./components/Header";
 
 function App() {
   //intervalo en localStorage
@@ -78,6 +79,11 @@ function App() {
 
   return (
     <Fragment>
+      <div className="container-fluid">
+        <div className="row">
+          <Header changeInterval={changeInterval} interval={interval} />
+        </div>
+      </div>
       <div className="container">
         <Quote quote={quote} />
         <Counter
@@ -86,7 +92,6 @@ function App() {
           stopTimer={stopTimer}
           resetTimer={resetTimer}
         />
-        <Settings changeInterval={changeInterval} interval={interval} />
       </div>
     </Fragment>
   );
