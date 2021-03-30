@@ -1,9 +1,35 @@
 import React, { useState, useEffect } from "react";
+import styled from "@emotion/styled";
+
+//styled components
+const Button = styled.button`
+  width: 100px;
+`;
+
+const Timer = styled.h1`
+  font-size: 120px;
+`;
+
+const Message = styled.h1`
+  font-weight: lighter;
+`;
+
+const Pomodoros = styled.p`
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: lighter;
+`;
+
+const PomodorosNumber = styled.h1`
+  font-size: 50px;
+  font-weight: lighter;
+`;
 
 const Counter = ({ focusinterval, restinterval, countdown, setCountdown }) => {
   //state
   const [timeLeft, setTimeLeft] = useState(focusinterval);
   const [rest, setRest] = useState(false);
+  const [pomodoros, setPomodoros] = useState(0);
 
   useEffect(() => {
     resetTimer();
@@ -23,10 +49,9 @@ const Counter = ({ focusinterval, restinterval, countdown, setCountdown }) => {
       resetTimer();
       if (rest) {
         setRest(false);
-        console.log("rest off");
       } else {
         setRest(true);
-        console.log("rest on");
+        setPomodoros(pomodoros + 1);
       }
     }
   }, [timeLeft, countdown]);
@@ -74,56 +99,75 @@ const Counter = ({ focusinterval, restinterval, countdown, setCountdown }) => {
     leftZero = null;
   }
 
-  let textOne;
-  let textTwo;
+  let messageStart;
+  let messagePause;
+  let messagePomodoros;
+
+  if (pomodoros === 1) {
+    messagePomodoros = "pomodoro done";
+  } else {
+    messagePomodoros = "pomodoros done";
+  }
 
   if (rest) {
-    textOne = "Press start to rest!";
-    textTwo = "Rest easy for now";
+    messageStart = "Press start to rest!";
+    messagePause = "Rest easy for now";
   } else {
-    textOne = "Press start to focus!";
-    textTwo = "Stay focused!";
+    messageStart = "Press start to focus!";
+    messagePause = "Stay focused!";
   }
 
   return (
     <div className="container text-center">
       <div className="row">
         <div className="col-sm">
-          <h1 className="timer">
+          <Timer>
             {minutes}:{leftZero}
             {seconds}
             {rightZero}
-          </h1>
+          </Timer>
           {countdown ? (
-            <h1 className="timer-header">{textTwo}</h1>
+            <Message>{messagePause}</Message>
           ) : (
-            <h1 className="timer-header">{textOne}</h1>
+            <Message>{messageStart}</Message>
           )}
           {countdown ? (
-            <button
-              className="btn btn-warning btn-lg timer-btn"
+            <Button
+              className="btn btn-warning btn-lg"
               onClick={() => stopTimer()}
             >
               Pause
-            </button>
+            </Button>
           ) : (
-            <button
-              className="btn btn-success btn-lg timer-btn"
+            <Button
+              className="btn btn-success btn-lg"
               onClick={() => startTimer()}
             >
               Start
-            </button>
+            </Button>
           )}
         </div>
       </div>
       <div className="row">
         <div className="col">
-          <button
-            className="btn btn-danger btn-sm mt-1 timer-btn"
+          <Button
+            className="btn btn-danger btn-sm mt-1"
             onClick={() => resetTimer()}
           >
             Reset
-          </button>
+          </Button>
+        </div>
+      </div>
+      <div className="row mt-5">
+        <div className="col">
+          {pomodoros > 0 ? (
+            <PomodorosNumber> {pomodoros}</PomodorosNumber>
+          ) : null}
+        </div>
+      </div>
+      <div className="row">
+        <div className="col">
+          {pomodoros > 0 ? <Pomodoros> {messagePomodoros}</Pomodoros> : null}
         </div>
       </div>
     </div>

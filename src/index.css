@@ -24,23 +24,6 @@ input {
   z-index: 1;
 }
 
-.timer-btn {
-  width: 100px;
-}
-
-.timer {
-  font-size: 120px;
-}
-
-.quote {
-  font-weight: lighter;
-  font-style: italic;
-}
-
-.timer-header {
-  font-weight: lighter;
-}
-
 .login {
   float: right;
 }

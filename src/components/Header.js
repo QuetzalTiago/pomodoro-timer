@@ -18,7 +18,7 @@ const Header = ({
   return (
     <Fragment>
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand className="col-md-10" href="#home">
+        <Navbar.Brand className="col-md-10">
           <img
             alt=""
             src="/logo.svg"
