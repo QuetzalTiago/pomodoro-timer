@@ -1,62 +1,47 @@
-import React, { useState, Fragment } from "react";
-import Navbar from "react-bootstrap/Navbar";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
+import React, { useEffect, Fragment } from "react";
 import Settings from "./Settings";
-
+import Login from "./Login";
+import M from "materialize-css/dist/js/materialize.min.js";
 const Header = ({
   changeFocusInterval,
   changeRestInterval,
   focusinterval,
   restinterval,
+  loggedin,
+  setLoggedIn,
 }) => {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  useEffect(() => {
+    //initialize materialize
+    M.AutoInit();
+  });
 
   return (
     <Fragment>
-      <Navbar bg="dark" variant="dark">
-        <Navbar.Brand className="col-md-10">
-          <img
-            alt=""
-            src="/logo.svg"
-            width="30"
-            height="30"
-            className="ml-2 d-inline-block align-top"
-          />{" "}
-          Pomodoro!
-        </Navbar.Brand>
-        <Button className="button-margin" variant="dark">
-          Login
-        </Button>
-        <Button variant="dark" onClick={handleShow}>
-          Settings
-        </Button>
-      </Navbar>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header>
-          <Modal.Title>Settings</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="container">
-            <div className="row">
-              <Settings
-                changeFocusInterval={changeFocusInterval}
-                changeRestInterval={changeRestInterval}
-                focusinterval={focusinterval}
-                restinterval={restinterval}
-              />
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <nav>
+        <div class="nav-wrapper teal darken-4">
+          <a href="#" class="brand-logo center">
+            Pomodoro
+          </a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li>
+              <a class="btn modal-trigger" href="#modal1">
+                Options
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div id="modal1" class="modal">
+        <div class="modal-content">
+          <Login loggedin={loggedin} setLoggedIn={setLoggedIn} />
+          <Settings
+            changeFocusInterval={changeFocusInterval}
+            changeRestInterval={changeRestInterval}
+            focusinterval={focusinterval}
+            restinterval={restinterval}
+          />
+        </div>
+      </div>
     </Fragment>
   );
 };

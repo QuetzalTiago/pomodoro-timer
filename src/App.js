@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Counter from "./components/Counter";
 import Quote from "./components/Quote";
 import Header from "./components/Header";
+import M from "materialize-css/dist/js/materialize.min.js";
 
 function App() {
   //intervalo en localStorage
@@ -13,6 +14,16 @@ function App() {
   if (!restInterval) {
     localStorage.setItem("restInterval", "600");
   }
+  let user = localStorage.getItem("user");
+  if (!user) {
+    localStorage.setItem("user", false);
+  }
+  let userIsLoggedIn;
+  if (user === "true") {
+    userIsLoggedIn = true;
+  } else {
+    userIsLoggedIn = false;
+  }
 
   // state
   const [countdown, setCountdown] = useState(false);
@@ -23,6 +34,7 @@ function App() {
     parseInt(localStorage.getItem("focusInterval"))
   );
   const [quote, setQuote] = useState("");
+  const [loggedin, setLoggedIn] = useState(userIsLoggedIn);
 
   //Cambiar intervalo de focus
   const changeFocusInterval = (seconds) => {
@@ -50,18 +62,21 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    //initialize materialize
+    M.AutoInit();
+  });
+
   return (
     <Fragment>
-      <div className="container-fluid">
-        <div className="row">
-          <Header
-            changeFocusInterval={changeFocusInterval}
-            changeRestInterval={changeRestInterval}
-            focusinterval={focusinterval}
-            restinterval={restinterval}
-          />
-        </div>
-      </div>
+      <Header
+        changeFocusInterval={changeFocusInterval}
+        changeRestInterval={changeRestInterval}
+        focusinterval={focusinterval}
+        restinterval={restinterval}
+        loggedin={loggedin}
+        setLoggedIn={setLoggedIn}
+      />
       <div className="container">
         <Quote quote={quote} />
         <Counter

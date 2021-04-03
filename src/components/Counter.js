@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import styled from "@emotion/styled";
+import M from "materialize-css/dist/js/materialize.min.js";
 
 //styled components
 const Button = styled.button`
-  width: 100px;
+  width: 150px;
 `;
 
 const Timer = styled.h1`
-  font-size: 120px;
+  font-size: 8rem;
 `;
 
 const Message = styled.h1`
   font-weight: lighter;
+  font-size: 2rem;
 `;
 
 const Pomodoros = styled.p`
@@ -46,6 +48,7 @@ const Counter = ({ focusinterval, restinterval, countdown, setCountdown }) => {
     if (timeLeft === 0) {
       let audio = new Audio("./goes-without-saying.mp3");
       audio.play();
+      M.toast({ html: "Pomodoro done, Congratulations!" });
       resetTimer();
       if (rest) {
         setRest(false);
@@ -55,16 +58,6 @@ const Counter = ({ focusinterval, restinterval, countdown, setCountdown }) => {
       }
     }
   }, [timeLeft, countdown]);
-
-  //Intervalo de tiempo
-  useEffect(() => {
-    if (rest) {
-      setTimeLeft(parseInt(localStorage.getItem("restInterval")));
-    } else {
-      setTimeLeft(parseInt(localStorage.getItem("focusInterval")));
-    }
-    resetTimer();
-  }, [focusinterval, restinterval]);
 
   //Parar contador
   const stopTimer = () => {
@@ -110,17 +103,17 @@ const Counter = ({ focusinterval, restinterval, countdown, setCountdown }) => {
   }
 
   if (rest) {
-    messageStart = "Press start to rest!";
+    messageStart = "Press start to rest";
     messagePause = "Rest easy for now";
   } else {
-    messageStart = "Press start to focus!";
-    messagePause = "Stay focused!";
+    messageStart = "Press start to focus";
+    messagePause = "Stay focused";
   }
 
   return (
-    <div className="container text-center">
+    <Fragment>
       <div className="row">
-        <div className="col-sm">
+        <div className="center">
           <Timer>
             {minutes}:{leftZero}
             {seconds}
@@ -132,45 +125,32 @@ const Counter = ({ focusinterval, restinterval, countdown, setCountdown }) => {
             <Message>{messageStart}</Message>
           )}
           {countdown ? (
-            <Button
-              className="btn btn-warning btn-lg"
-              onClick={() => stopTimer()}
-            >
+            <Button className="btn-large" onClick={() => stopTimer()}>
               Pause
             </Button>
           ) : (
-            <Button
-              className="btn btn-success btn-lg"
-              onClick={() => startTimer()}
-            >
+            <Button className="btn-large" onClick={() => startTimer()}>
               Start
             </Button>
           )}
         </div>
       </div>
       <div className="row">
-        <div className="col">
-          <Button
-            className="btn btn-danger btn-sm mt-1"
-            onClick={() => resetTimer()}
-          >
+        <div className="center">
+          <Button className="btn-small" onClick={() => resetTimer()}>
             Reset
           </Button>
         </div>
       </div>
-      <div className="row mt-5">
-        <div className="col">
+      <div className="row">
+        <div className="center">
           {pomodoros > 0 ? (
             <PomodorosNumber> {pomodoros}</PomodorosNumber>
           ) : null}
-        </div>
-      </div>
-      <div className="row">
-        <div className="col">
           {pomodoros > 0 ? <Pomodoros> {messagePomodoros}</Pomodoros> : null}
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 };
 
