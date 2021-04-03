@@ -22,9 +22,10 @@ const Header = ({
           <a href="#" class="brand-logo center">
             Pomodoro
           </a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+          <ul class="right">
             <li>
-              <a class="btn modal-trigger" href="#modal1">
+              <a class="modal-trigger" href="#modal1">
                 Options
               </a>
             </li>
