@@ -33,9 +33,17 @@ const Counter = ({ focusinterval, restinterval, countdown, setCountdown }) => {
   const [rest, setRest] = useState(false);
   const [pomodoros, setPomodoros] = useState(0);
 
+  //resetear timer cuando se pasa a rest
   useEffect(() => {
     resetTimer();
   }, [rest, setRest]);
+
+  //resetear timer si se cambia el intervalo
+  useEffect(() => {
+    if (countdown === false) {
+      resetTimer();
+    }
+  }, [focusinterval, restinterval]);
 
   //Disminuir contador
   let count;
