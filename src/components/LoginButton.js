@@ -7,18 +7,27 @@ import { refreshTokenSetup } from "../utils/refreshToken";
 const clientId =
   "693535113278-jnt8heu25ilormffmthru6t0mrnectm8.apps.googleusercontent.com";
 
-const onSuccess = (res) => {
-  console.log("Login Success: currentUser:", res);
-  localStorage.setItem("user", true);
-  refreshTokenSetup(res);
-  window.location.reload();
-};
-
-const onFailure = (res) => {
-  console.log("Login failed: res:", res);
-};
-
 const LoginButton = () => {
+  const onSuccess = (res) => {
+    console.log("Login Success: currentUser:", res);
+    localStorage.setItem("user", true);
+    localStorage.setItem("userInfo", JSON.stringify(res.profileObj));
+    refreshTokenSetup(res);
+    window.location.reload();
+    // let id_token = res.tokenObj.id_token;
+    // let xhr = new XMLHttpRequest();
+    // xhr.open("POST", "https://yourbackend.example.com/tokensignin");
+    // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    // xhr.onload = () => {
+    //   console.log("Signed in as: " + xhr.responseText);
+    // };
+    // xhr.send("idtoken=" + id_token);
+  };
+
+  const onFailure = (res) => {
+    console.log("Login failed: res:", res);
+  };
+
   return (
     <div>
       <GoogleLogin

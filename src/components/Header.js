@@ -2,13 +2,14 @@ import React, { useEffect, Fragment } from "react";
 import Settings from "./Settings";
 import Login from "./Login";
 import M from "materialize-css/dist/js/materialize.min.js";
+
 const Header = ({
   changeFocusInterval,
   changeRestInterval,
   focusinterval,
   restinterval,
   loggedin,
-  setLoggedIn,
+  userinfo,
 }) => {
   useEffect(() => {
     //initialize materialize
@@ -18,29 +19,38 @@ const Header = ({
   return (
     <Fragment>
       <nav>
-        <div class="nav-wrapper teal darken-4">
-          <a href="#" class="brand-logo center">
-            Pomodoro
+        <div className="nav-wrapper teal darken-3">
+          <a href="#!" className="brand-logo center">
+            Pomodoro!
           </a>
 
-          <ul class="right">
+          <ul className="right">
             <li>
-              <a class="modal-trigger" href="#modal1">
-                Options
+              <a className="modal-trigger" href="#modal2">
+                <i className="material-icons">account_circle</i>
+              </a>
+            </li>
+            <li>
+              <a className="modal-trigger" href="#modal1">
+                <i className="material-icons">settings</i>
               </a>
             </li>
           </ul>
         </div>
       </nav>
-      <div id="modal1" class="modal">
-        <div class="modal-content">
-          <Login loggedin={loggedin} setLoggedIn={setLoggedIn} />
+      <div id="modal1" className="modal">
+        <div className="modal-content">
           <Settings
             changeFocusInterval={changeFocusInterval}
             changeRestInterval={changeRestInterval}
             focusinterval={focusinterval}
             restinterval={restinterval}
           />
+        </div>
+      </div>
+      <div id="modal2" className="modal">
+        <div className="modal-content">
+          <Login loggedin={loggedin} userinfo={userinfo} />
         </div>
       </div>
     </Fragment>

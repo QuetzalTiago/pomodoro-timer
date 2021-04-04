@@ -7,6 +7,7 @@ const clientId =
 const onSuccess = () => {
   console.log("Logout made successfully");
   localStorage.setItem("user", false);
+  localStorage.removeItem("userInfo");
   window.location.reload();
 };
 

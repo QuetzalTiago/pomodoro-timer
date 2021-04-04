@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import M from "materialize-css/dist/js/materialize.min.js";
 
@@ -48,7 +48,7 @@ const Settings = ({
         <label htmlFor="focus">
           <Title className="center">Focus time</Title>
         </label>
-        <p class="range-field">
+        <p className="range-field">
           <input
             type="range"
             id="focus"
@@ -71,7 +71,7 @@ const Settings = ({
         <label htmlFor="rest">
           <Title className="center">Rest time</Title>
         </label>
-        <p class="range-field">
+        <p className="range-field">
           <input
             type="range"
             id="rest"
@@ -92,7 +92,11 @@ const Settings = ({
         </label>
       </div>
       <div className="row center">
-        <a class="modal-close btn" onClick={saveChanges}>
+        <a
+          href="#!"
+          className="modal-close btn waves-effect waves-light"
+          onClick={saveChanges}
+        >
           Save changes
         </a>
       </div>

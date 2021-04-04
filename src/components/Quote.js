@@ -4,7 +4,7 @@ import Spinner from "./Spinner";
 
 //styled components
 const Text = styled.h2`
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: lighter;
   font-style: italic;
 `;

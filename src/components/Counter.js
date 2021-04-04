@@ -8,7 +8,7 @@ const Button = styled.button`
 `;
 
 const Timer = styled.h1`
-  font-size: 8rem;
+  font-size: 6.5rem;
 `;
 
 const Message = styled.h1`
@@ -17,26 +17,45 @@ const Message = styled.h1`
 `;
 
 const Pomodoros = styled.p`
-  font-size: 20px;
+  font-size: 1rem;
   text-transform: uppercase;
   font-weight: lighter;
 `;
 
 const PomodorosNumber = styled.h1`
-  font-size: 50px;
+  font-size: 4rem;
   font-weight: lighter;
 `;
 
-const Counter = ({ focusinterval, restinterval, countdown, setCountdown }) => {
+const Counter = ({
+  focusinterval,
+  restinterval,
+  countdown,
+  setCountdown,
+  task,
+  taskactive,
+  tasklist,
+  setTaskList,
+}) => {
   //state
   const [timeLeft, setTimeLeft] = useState(focusinterval);
   const [rest, setRest] = useState(false);
   const [pomodoros, setPomodoros] = useState(0);
-
+  const [goal, setGoal] = useState(8);
   //resetear timer cuando se pasa a rest
   useEffect(() => {
     resetTimer();
   }, [rest, setRest]);
+
+  //resetear timer si se cambia de task
+  useEffect(() => {
+    if (taskactive) {
+      setGoal(task.pomodoros);
+      setPomodoros(task.completed);
+      setRest(false);
+      resetTimer();
+    }
+  }, [task, taskactive, tasklist, setTaskList]);
 
   //resetear timer si se cambia el intervalo
   useEffect(() => {
@@ -51,6 +70,8 @@ const Counter = ({ focusinterval, restinterval, countdown, setCountdown }) => {
     count = setTimeout(() => {
       if (countdown) {
         setTimeLeft(timeLeft - 1);
+      } else {
+        resetTimer();
       }
     }, 1000);
     if (timeLeft === 0) {
@@ -63,6 +84,7 @@ const Counter = ({ focusinterval, restinterval, countdown, setCountdown }) => {
       } else {
         setRest(true);
         setPomodoros(pomodoros + 1);
+        updateTask();
       }
     }
   }, [timeLeft, countdown]);
@@ -89,6 +111,15 @@ const Counter = ({ focusinterval, restinterval, countdown, setCountdown }) => {
     }
   };
 
+  //Update task
+  const updateTask = () => {
+    tasklist.forEach((item) => {
+      if (item.name === task.name) {
+        item.completed = item.completed + 1;
+      }
+    });
+  };
+
   let minutes = Math.floor(timeLeft / 60);
   let seconds = timeLeft - minutes * 60;
   let rightZero = 0;
@@ -102,13 +133,6 @@ const Counter = ({ focusinterval, restinterval, countdown, setCountdown }) => {
 
   let messageStart;
   let messagePause;
-  let messagePomodoros;
-
-  if (pomodoros === 1) {
-    messagePomodoros = "pomodoro done";
-  } else {
-    messagePomodoros = "pomodoros done";
-  }
 
   if (rest) {
     messageStart = "Press start to rest";
@@ -122,6 +146,14 @@ const Counter = ({ focusinterval, restinterval, countdown, setCountdown }) => {
     <Fragment>
       <div className="row">
         <div className="center">
+          <PomodorosNumber>
+            {pomodoros} / {goal}{" "}
+          </PomodorosNumber>
+          <Pomodoros> pomodoros done</Pomodoros>
+        </div>
+      </div>
+      <div className="row">
+        <div className="center">
           <Timer>
             {minutes}:{leftZero}
             {seconds}
@@ -133,11 +165,17 @@ const Counter = ({ focusinterval, restinterval, countdown, setCountdown }) => {
             <Message>{messageStart}</Message>
           )}
           {countdown ? (
-            <Button className="btn-large" onClick={() => stopTimer()}>
+            <Button
+              className="btn-large waves-effect waves-light"
+              onClick={() => stopTimer()}
+            >
               Pause
             </Button>
           ) : (
-            <Button className="btn-large" onClick={() => startTimer()}>
+            <Button
+              className="btn-large waves-effect waves-light"
+              onClick={() => startTimer()}
+            >
               Start
             </Button>
           )}
@@ -145,17 +183,12 @@ const Counter = ({ focusinterval, restinterval, countdown, setCountdown }) => {
       </div>
       <div className="row">
         <div className="center">
-          <Button className="btn-small" onClick={() => resetTimer()}>
+          <Button
+            className="btn-small waves-effect waves-light"
+            onClick={() => resetTimer()}
+          >
             Reset
           </Button>
-        </div>
-      </div>
-      <div className="row">
-        <div className="center">
-          {pomodoros > 0 ? (
-            <PomodorosNumber> {pomodoros}</PomodorosNumber>
-          ) : null}
-          {pomodoros > 0 ? <Pomodoros> {messagePomodoros}</Pomodoros> : null}
         </div>
       </div>
     </Fragment>

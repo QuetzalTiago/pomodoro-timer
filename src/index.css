@@ -10,7 +10,10 @@ body {
     #57e9f2 48%,
     #45d4fb 100%
   );
-  padding-bottom: 10rem;
+}
+
+footer {
+  margin-top: 4rem;
 }
 
 #toast-container {
@@ -18,10 +21,6 @@ body {
   right: auto !important;
   bottom: 10%;
   left: 10%;
-}
-
-footer {
-  height: 100px;
 }
 
 code {
